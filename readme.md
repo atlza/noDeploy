@@ -10,13 +10,11 @@ It assumes that you have git, npm and composer installed and working.
 
 ### Prerequisites
 
-You need :
+You will need :
  - git to retrieve your code from a repo
  - npm to install dependencies and run webpack  
  - composer for php dependencies
-```
-Give examples
-```
+
 ### What it does
  - switch current user to deploy user
  - ask for tag to deploy  
@@ -69,6 +67,7 @@ or for staging
 
 ## Next steps  
 - Add feature to remove old releases from system.
+- Fully manage staging environments and parameters
 - figure a better way to manage permissions on scripts
 
 ## Authors

@@ -64,7 +64,7 @@ or for staging
 ```
 
 ## Next steps  
-Add feature to remove old releaes from system.
+Add feature to remove old releases from system.
 
 ## Authors
 
@@ -78,4 +78,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Thanks to Charlie Etienne [Web nancy](https://web-nancy.fr/) for orignal script and idea
+* Thanks to Charlie Etienne [Web nancy](https://web-nancy.fr/) for original script and idea

@@ -74,11 +74,10 @@ or for staging
 
 * **Guillaume Le Roy** [Mu Studio](http://work.withmu.com)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](license.md) file for details
 
 ## Acknowledgments
 

@@ -24,4 +24,4 @@ elif [ $environnement != 'prod' ] && [ $environnement != 'recette' ]; then
 fi
 
 #sudo deploy
-sudo -i -u $ME bash -c "./realDeploy.sh $environnement "
+sudo -i -u $ME bash -c "${PWD}/realDeploy.sh $environnement "

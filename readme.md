@@ -30,9 +30,12 @@ Give examples
 ### Installing
 
 Clone this repo in your ssh user home directory  
+Give current user execute permissions
 
 ```
 git clone https://github.com/atlza/noDeploy.git
+chmod 0744 deploy.sh
+chmod 0744 realDeploy.sh 
 ```
 
 ## How to use it

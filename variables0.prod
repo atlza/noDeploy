@@ -1,0 +1,8 @@
+#ask for tagname
+echo Which tag sall we deploy?
+read versionTag
+#versionTag='0.0.1'
+
+deployPath="/srv/oriws01_data/www/noan/app/releases"
+gitPath="git@github.com:atlza/noan.git"
+releaseDate=$(date '+%Y%m%d%H%M%S')

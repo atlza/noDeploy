@@ -1,0 +1,50 @@
+###########################
+### Vriables for script ###
+###########################
+variables.prod
+variables.recette
+variables.stage
+variables.dev
+variables.backup
+
+
+# IDE Files
+#-------------------------
+/nbproject/
+.idea/*
+
+#########################
+### Eclipse.gitignore ###
+#########################
+
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# CDT-specific
+.cproject
+
+#####################
+### OSX.gitignore ###
+#####################
+
+.DS_Store
+Icon
+*.tmproj
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes

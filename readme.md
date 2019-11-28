@@ -30,12 +30,13 @@ Give examples
 ### Installing
 
 Clone this repo in your ssh user home directory  
-Give current user execute permissions
+Give current user permission to execute both deploy.sh and realDeploy.sh
+We also give others users right to execute realDeploy.sh so user deploy can execute the file.
 
 ```
 git clone https://github.com/atlza/noDeploy.git
 chmod 0744 deploy.sh
-chmod 0744 realDeploy.sh 
+chmod 0745 realDeploy.sh
 ```
 
 ## How to use it
@@ -67,11 +68,12 @@ or for staging
 ```
 
 ## Next steps  
-Add feature to remove old releases from system.
+- Add feature to remove old releases from system.
+- figure a better way to manage permissions on scripts
 
 ## Authors
 
-* **Guillaume Le Roy** - *Initial work* - [Mu Studio](http://work.withmu.com)
+* **Guillaume Le Roy** [Mu Studio](http://work.withmu.com)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 

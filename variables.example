@@ -1,5 +1,5 @@
 #ask for tagname
-echo Which tag sall we deploy?
+echo Which tag shall we deploy?
 read versionTag
 
 #or set a version number

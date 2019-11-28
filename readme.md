@@ -5,55 +5,70 @@ Deploy your laravel app with a bash script.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+This script was tested to deploy a laravel App in a LAMP environment from a git repository and a tag version.
+It assumes that you have git, npm and composer installed and working.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
+You need :
+ - git to retrieve your code from a repo
+ - npm to install dependencies and run webpack  
+ - composer for php dependencies
 ```
 Give examples
 ```
+### What it does
+ - switch current user to deploy user
+ - ask for tag to deploy  
+ - clone tag into destination directory  
+ - install composer dependencies
+ - install npm dependencies
+ - run webpack
+ - run artisan for DB updates and clear caches  
+ - move symlink from previous release to new one (no downtime)
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+Clone this repo in your ssh user home directory  
 
 ```
-Give the example
+git clone https://github.com/atlza/noDeploy.git
 ```
 
-And repeat
+## How to use it
 
+This script use a deploy user, which also is member of your www-data group
+This user must have the rights to access your git repository, you can use a deploy key for this.
+In our case, this user is called deploy. You can change it in the deploy.sh script.
+
+Copy the variables files
 ```
-until finished
+cp variables.example variables.prod
+```
+Fill the variables files with correct value.
+Mainly :
+```
+#where you app should be deployed
+deployPath="/path/to/deploy"
+
+#your git repository
+gitPath="git@github.com:user/repo.git"
+```
+Run the deploy script   
+```
+./deploy.sh prod
+```
+or for staging
+```
+./deploy.sh recette
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+## Next steps  
+Add feature to remove old releaes from system.
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Guillaume Le Roy** - *Initial work* - [Mu Studio](http://work.withmu.com)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -63,6 +78,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Thanks to Charlie Etienne [Web nancy](https://web-nancy.fr/) for orignal script and idea

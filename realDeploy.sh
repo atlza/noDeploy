@@ -107,7 +107,7 @@ echo "*******************************************************"
 echo "Give righ access on storage"
 echo "*******************************************************"
 pwd
-chmod -R 0755 storage/
+chmod -R 0775 storage/
 
 echo "*******************************************************"
 echo "Removing old current symlink"

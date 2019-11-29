@@ -79,12 +79,6 @@ php artisan cache:clear
 echo "*******************************************************"
 echo ' '
 
-# Clear expired password reset tokens
-echo "CLEARING EXPIRED PASSWORD RESET TOKENS"
-php artisan auth:clear-resets
-echo "*******************************************************"
-echo ' '
-
 # Clear and cache routes
 echo "CLEARING AND CACHE ROUTES"
 php artisan route:cache
@@ -103,8 +97,11 @@ echo "*******************************************************"
 php artisan migrate --force
 echo ' '
 
-rm -f .env
-cp .env.prod .env
+# Clear expired password reset tokens
+echo "CLEARING EXPIRED PASSWORD RESET TOKENS"
+php artisan auth:clear-resets
+echo "*******************************************************"
+echo ' '
 
 echo "*******************************************************"
 echo "Give righ access on storage"

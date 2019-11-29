@@ -21,6 +21,7 @@ echo "*******************************************************"
 echo "Scripts vars"
 echo "*******************************************************"
 echo "Deploy path : $deployPath "
+echo "Config path : $configPath "
 echo "Git repo : $gitPath "
 echo "Release date : $releaseDate "
 echo "Choosen tag: $versionTag "
@@ -61,8 +62,9 @@ npm run prod
 echo ' '
 
 echo "*******************************************************"
-echo "MIGRATING DATABASE"
-php artisan migrate --force
+echo "Setting .env file"
+rm -f .env
+cp ${configPath}.env.prod .env
 echo "*******************************************************"
 echo ' '
 
@@ -94,9 +96,6 @@ echo "CLEARING AND CACHE CONFIG"
 php artisan config:cache
 echo "*******************************************************"
 echo ' '
-
-rm -f .env
-cp .env.prod .env
 
 echo "*******************************************************"
 echo "Updating DB with artisan"

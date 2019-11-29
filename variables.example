@@ -11,5 +11,8 @@ deployPath="/path/to/deploy"
 #your git repository
 gitPath="git@github.com:user/repo.git"
 
+#path for your config files so they are not in your git repository
+configPath="../../config/"
+
 #current dateTime used for destination dirrectory
 releaseDate=$(date '+%Y%m%d%H%M%S')

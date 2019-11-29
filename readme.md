@@ -33,8 +33,6 @@ We also give others users right to execute realDeploy.sh so user deploy can exec
 
 ```
 git clone https://github.com/atlza/noDeploy.git
-chmod 0744 deploy.sh
-chmod 0745 realDeploy.sh
 ```
 
 ## How to use it
@@ -68,7 +66,6 @@ or for staging
 ## Next steps  
 - Add feature to remove old releases from system.
 - Fully manage staging environments and parameters
-- figure a better way to manage permissions on scripts
 
 ## Authors
 

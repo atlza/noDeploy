@@ -7,14 +7,15 @@ srcPath=$2
   if [ -z $environnement ]; then
     echo "Environnement is missing"
     exit -1
-  else
-    if [ $environnement != 'prod' ] && [ $environnement != 'recette' ]; then
-      echo "Environnement is wrong, should be prod or recette"
-     exit -1
-    fi
+  elif [ -z $srcPath ]; then
+    echo "SRC path is missing"
+    exit -1
+  elif [ $environnement != 'prod' ] && [ $environnement != 'recette' ]; then
+    echo "Environnement is wrong, should be prod or recette"
+    exit -1
   fi
 
-source '${srcPath}/variables.prod'
+source "${srcPath}/variables.prod"
 
 echo "*******************************************************"
 echo "Scripts vars"

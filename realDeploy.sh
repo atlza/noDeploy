@@ -34,8 +34,11 @@ pwd
 echo "*******************************************************"
 echo "Cloning tag into releases directory"
 echo "*******************************************************"
-git clone -b ${versionTag}  --single-branch $gitPath $releaseDate
-
+if [ -z $versionTag ]; then
+  git clone --single-branch $gitPath $releaseDate
+else
+  git clone -b ${versionTag}  --single-branch $gitPath $releaseDate
+fi
 
 cd $releaseDate
 pwd

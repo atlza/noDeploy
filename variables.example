@@ -1,5 +1,5 @@
 #ask for tagname
-echo Which tag shall we deploy? (empty for master branch)
+echo Which tag shall we deploy? - empty for master branch -
 read versionTag
 
 #or set a version number

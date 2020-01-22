@@ -5,11 +5,6 @@ read versionTag
 #or set a version number
 #versionTag='0.0.1'
 
-#ask for environnement
-echo Which environnement shall we deploy? recette/prod
-read environnement
-#environnement='prod'
-
 #where you app should be deployed
 deployPath="/path/to/deploy/${environnement}"
 

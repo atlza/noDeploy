@@ -139,4 +139,13 @@ for dir in "${array[@]}"; do echo "$dir"; done
 shopt -u dotglob
 shopt -u nullglob
 
+#if more than 3 folders in releases we will remove olds one
+arraySize=${#array[@]}
+
+echo "Array size is ${arraySize} "
+if [ "${arraySize}" > "3" ]; then
+        echo "removing old version ${array[0]}"
+        rm -rf ${array[0]}
+fi
+
 exit

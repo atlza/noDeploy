@@ -125,4 +125,18 @@ pwd
 echo "*******************************************************"
 ln -s releases/${releaseDate} current
 
+echo "*******************************************************"
+echo "Removing previous versions"
+echo "*******************************************************"
+cd releases/
+shopt -s dotglob
+shopt -s nullglob
+array=(*/)
+for dir in "${array[@]}"; do echo "$dir"; done
+
+# Unset shell option after use, if desired. Nullglob
+# is unset by default.
+shopt -u dotglob
+shopt -u nullglob
+
 exit

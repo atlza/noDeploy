@@ -5,8 +5,13 @@ read versionTag
 #or set a version number
 #versionTag='0.0.1'
 
+#ask for environnement
+echo Which environnement shall we deploy? recette/prod
+read environnement
+#environnement='prod'
+
 #where you app should be deployed
-deployPath="/path/to/deploy"
+deployPath="/path/to/deploy/${environnement}"
 
 #your git repository
 gitPath="git@github.com:user/repo.git"
@@ -14,5 +19,5 @@ gitPath="git@github.com:user/repo.git"
 #path for your config files so they are not in your git repository
 configPath="../../config/"
 
-#current dateTime used for destination dirrectory
+#current dateTime used for destination directory
 releaseDate=$(date '+%Y%m%d%H%M%S')

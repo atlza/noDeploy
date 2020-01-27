@@ -125,6 +125,7 @@ do
    :
    if [ ! -d "../../shared/${folder}" ]; then
        mkdir -p "../..shared/${folder}"
+       chmod -R 0775 "../..shared/${folder}/"
        echo " -> Creating directory: ../../..shared/${folder}"
    fi
    ln -s "../../../shared/${folder}" ${folder}

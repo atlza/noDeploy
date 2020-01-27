@@ -67,7 +67,7 @@ echo ' '
 echo "*******************************************************"
 echo "Setting .env file from .env.${environnement}"
 rm -f .env
-cp ${configPath}.env.${environnement} .env
+cp .env.${environnement} .env
 echo "*******************************************************"
 echo ' '
 

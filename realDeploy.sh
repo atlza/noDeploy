@@ -65,14 +65,9 @@ npm run prod
 echo ' '
 
 echo "*******************************************************"
-echo "Setting .env file"
+echo "Setting .env file from .env.${environnement}"
 rm -f .env
-cp ${configPath}.env.prod .env
-echo "*******************************************************"
-echo ' '
-
-echo "*******************************************************"
-echo "USING correct .env file"
+cp ${configPath}.env.${environnement} .env
 echo "*******************************************************"
 echo ' '
 
@@ -111,6 +106,13 @@ echo "Give righ access on storage"
 echo "*******************************************************"
 pwd
 chmod -R 0775 storage/
+
+echo "*******************************************************"
+echo "Setup environnement .htaccess"
+echo "*******************************************************"
+if [ -f "public/.htaccess.${environnement}" ]; then
+    cp "public/.htaccess.${environnement}" public/.htaccess
+fi
 
 echo "*******************************************************"
 echo "Removing old current symlink"

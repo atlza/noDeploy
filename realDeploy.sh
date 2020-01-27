@@ -110,8 +110,10 @@ chmod -R 0775 storage/
 echo "*******************************************************"
 echo "Setup environnement .htaccess"
 echo "*******************************************************"
+pwd
 if [ -f "public/.htaccess.${environnement}" ]; then
     cp "public/.htaccess.${environnement}" public/.htaccess
+    echo "Setting public/.htaccess.${environnement}"
 fi
 
 echo "*******************************************************"

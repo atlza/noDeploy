@@ -16,3 +16,8 @@ configPath="../../config/"
 
 #current dateTime used for destination directory
 releaseDate=$(date '+%Y%m%d%H%M%S')
+
+#shared folder to link to (without final /)
+shared[0]="storage"
+#shared[1]="..."
+#shared[2]="..."

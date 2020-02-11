@@ -123,19 +123,19 @@ pwd
 for folder in "${shared[@]}"
 do
    :
-   if [ ! -d "../../shared/${folder}" ]; then
-       mkdir -p "../..shared/${folder}"
-       chmod -R 0775 "../..shared/${folder}/"
-       echo " -> Creating directory: ../../..shared/${folder}"
+   if [ ! -d "${deployPath}/shared/${folder}" ]; then
+       mkdir -p "${deployPath}/shared/${folder}"
+       chmod -R 0775 "${deployPath}/shared/${folder}/"
+       echo " -> Creating directory: ${deployPath}/shared/${folder}"
    fi
-   ln -s "../../../shared/${folder}" ${folder}
+   ln -s "${deployPath}/shared/${folder}" ${folder}
 done
 
 echo "*******************************************************"
 echo "Removing old current symlink"
 echo "*******************************************************"
 pwd
-cd ../../
+cd ${deployPath}
 rm current
 
 echo "*******************************************************"

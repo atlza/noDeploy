@@ -136,6 +136,7 @@ done
 
 echo "*******************************************************"
 echo "Removing old current symlink"
+cd $deployPath
 pwd
 echo "*******************************************************"
 rm current

@@ -16,19 +16,22 @@ srcPath=$2
   fi
 
 source "${srcPath}/variables.prod"
+releasesPath = "${deployPath}/releases"
 
 echo "*******************************************************"
 echo "Scripts vars"
 echo "*******************************************************"
 echo "Deploy path : $deployPath "
+echo "Releases path : $releasesPath "
 echo "Config path : $configPath "
 echo "Git repo : $gitPath "
 echo "Release date : $releaseDate "
 echo "Choosen tag: $versionTag "
 
 
+
 #change dir to app path
-cd $deployPath
+cd $releasesPath
 pwd
 
 echo "*******************************************************"
@@ -135,7 +138,6 @@ echo "*******************************************************"
 echo "Removing old current symlink"
 pwd
 echo "*******************************************************"
-cd $deployPath
 rm current
 
 echo "*******************************************************"
@@ -146,6 +148,7 @@ ln -s releases/${releaseDate} current
 
 echo "*******************************************************"
 echo "Removing previous versions"
+pwd
 echo "*******************************************************"
 cd releases/
 shopt -s dotglob

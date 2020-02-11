@@ -16,7 +16,7 @@ srcPath=$2
   fi
 
 source "${srcPath}/variables.prod"
-releasesPath = "${deployPath}/releases"
+releasesPath="${deployPath}/releases"
 
 echo "*******************************************************"
 echo "Scripts vars"

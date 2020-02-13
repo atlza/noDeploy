@@ -166,7 +166,7 @@ shopt -u nullglob
 arraySize=${#array[@]}
 
 echo "Array size is ${arraySize} "
-if [ "${arraySize}" > 3 ]; then
+if [ "${arraySize}" -gt 3 ]; then
         echo "removing old version ${array[0]}"
         rm -rf ${array[0]}
 fi

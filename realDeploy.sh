@@ -4,19 +4,25 @@
 environnement=$1
 srcPath=$2
 
-  if [ -z $environnement ]; then
+if [ -z $environnement ]; then
     echo "Environnement is missing"
     exit -1
-  elif [ -z $srcPath ]; then
+elif [ -z $srcPath ]; then
     echo "SRC path is missing"
     exit -1
-  elif [ $environnement != 'prod' ] && [ $environnement != 'recette' ]; then
+elif [ $environnement != 'prod' ] && [ $environnement != 'recette' ]; then
     echo "Environnement is wrong, should be prod or recette"
     exit -1
-  fi
+fi
 
 source "${srcPath}/variables.prod"
 releasesPath="${deployPath}/releases"
+
+if [ -z ${versionTag+x} ]; then
+    #ask for tagname
+    echo Which tag shall we deploy? - empty for master branch -
+    read versionTag
+fi
 
 echo "*******************************************************"
 echo "Scripts vars"
@@ -27,8 +33,6 @@ echo "Config path : $configPath "
 echo "Git repo : $gitPath "
 echo "Release date : $releaseDate "
 echo "Choosen tag: $versionTag "
-
-
 
 #change dir to app path
 cd $releasesPath

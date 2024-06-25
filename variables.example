@@ -1,11 +1,7 @@
 #wich user should deploy the app ? Replace "username" by your username
 ME="username"
 
-#ask for tagname
-echo Which tag shall we deploy? - empty for master branch -
-read versionTag
-
-#or set a version number
+#Set a version number or leave commented so the programm will ask each time
 #versionTag='0.0.1'
 
 #where you app should be deployed

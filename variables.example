@@ -20,3 +20,6 @@ releaseDate=$(date '+%Y%m%d%H%M%S')
 shared[0]="storage"
 #shared[1]="..."
 #shared[2]="..."
+
+#Number of old versions to keep for rollback (1 = just the new one)
+oldVersions=1

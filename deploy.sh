@@ -6,7 +6,7 @@ if [ -f ~/.bashrc ]; then
 fi
 
 #loading vars
-source "${srcPath}/variables.prod"
+source "$PWD/variables.prod"
 
 #environnement argument
 environnement=$1

@@ -70,7 +70,7 @@ echo ' '
 echo "*******************************************************"
 echo "Setting .env file from .env.${environnement}"
 rm -f .env
-cp .env.${environnement} .env
+cp $srcPath/app-files/.env.${environnement} .env
 echo "*******************************************************"
 echo ' '
 

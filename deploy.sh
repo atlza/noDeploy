@@ -5,8 +5,8 @@ if [ -f ~/.bashrc ]; then
         . ~/.bashrc
 fi
 
-# Replace "username" by your username
-ME="deploy"
+#loading vars
+source "${srcPath}/variables.prod"
 
 #environnement argument
 environnement=$1

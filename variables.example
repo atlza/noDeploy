@@ -1,3 +1,6 @@
+#wich user should deploy the app ? Replace "username" by your username
+ME="username"
+
 #ask for tagname
 echo Which tag shall we deploy? - empty for master branch -
 read versionTag

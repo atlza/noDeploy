@@ -1,178 +1,118 @@
 #!/bin/bash
+set -e
 
-#environnement argument
+step() { echo; echo "==> $1"; }
+
+# Arguments
 environnement=$1
 srcPath=$2
 
-if [ -z $environnement ]; then
+if [ -z "$environnement" ]; then
     echo "Environnement is missing"
-    exit -1
-elif [ -z $srcPath ]; then
+    exit 1
+elif [ -z "$srcPath" ]; then
     echo "SRC path is missing"
-    exit -1
-elif [ $environnement != 'prod' ] && [ $environnement != 'recette' ]; then
+    exit 1
+elif [ "$environnement" != 'prod' ] && [ "$environnement" != 'recette' ]; then
     echo "Environnement is wrong, should be prod or recette"
-    exit -1
+    exit 1
 fi
 
-source "${srcPath}/variables.prod"
+source "${srcPath}/variables.${environnement}"
 releasesPath="${deployPath}/releases"
 
-if [ -z ${versionTag+x} ]; then
-    #ask for tagname
-    echo Which tag shall we deploy? - empty for master branch -
+if [ -z "${versionTag+x}" ]; then
+    echo "Which tag shall we deploy? - empty for master branch -"
     read versionTag
 fi
 
-echo "*******************************************************"
-echo "Scripts vars"
-echo "*******************************************************"
-echo "Deploy path : $deployPath "
-echo "Releases path : $releasesPath "
-echo "Config path : $configPath "
-echo "Git repo : $gitPath "
-echo "Release date : $releaseDate "
-echo "Choosen tag: $versionTag "
+step "Deploy config"
+echo "  Deploy path  : $deployPath"
+echo "  Releases path: $releasesPath"
+echo "  Config path  : $configPath"
+echo "  Git repo     : $gitPath"
+echo "  Release date : $releaseDate"
+echo "  Tag          : ${versionTag:-master}"
 
-#change dir to app path
-cd $releasesPath
-pwd
-
-echo "*******************************************************"
-echo "Cloning tag into releases directory"
-echo "*******************************************************"
-if [ -z $versionTag ]; then
-  git clone --single-branch $gitPath $releaseDate
+step "Cloning repository"
+cd "$releasesPath"
+if [ -z "$versionTag" ]; then
+    git clone --single-branch "$gitPath" "$releaseDate"
 else
-  git clone -b ${versionTag}  --single-branch $gitPath $releaseDate
+    git clone -b "${versionTag}" --single-branch "$gitPath" "$releaseDate"
+fi
+cd "$releaseDate"
+
+step "Installing composer packages"
+composer install --no-dev --prefer-dist --optimize-autoloader
+
+step "Installing npm packages"
+npm install
+
+step "Building assets"
+npm run build
+
+step "Setting .env from .env.${environnement}"
+rm -f .env
+cp "$srcPath/app-files/.env.${environnement}" .env
+
+if [ "${isLaravel}" = "true" ]; then
+    step "Clearing cache"
+    php artisan cache:clear
+
+    step "Caching routes"
+    php artisan route:cache
+
+    step "Caching config"
+    php artisan config:cache
+
+    step "Linking storage"
+    php artisan storage:link
+
+    step "Running migrations"
+    php artisan migrate --force
+
+    step "Clearing expired password reset tokens"
+    php artisan auth:clear-resets
 fi
 
-cd $releaseDate
-pwd
-
-# Install new composer packages
-echo "*******************************************************"
-echo "INSTALLING COMPOSER PACKAGES"
-echo "*******************************************************"
-composer install --no-dev --prefer-dist --optimize-autoloader
-echo ' '
-
-# Install new npm packages
-echo "*******************************************************"
-echo "INSTALLING NPM PACKAGES"
-echo "*******************************************************"
-npm  install
-echo ' '
-
-# Generating dist assets
-echo "*******************************************************"
-echo "Generating assets"
-echo "*******************************************************"
-npm run build
-echo ' '
-
-echo "*******************************************************"
-echo "Setting .env file from .env.${environnement}"
-rm -f .env
-cp $srcPath/app-files/.env.${environnement} .env
-echo "*******************************************************"
-echo ' '
-
-# Clear caches
-echo "CLEARING CACHE"
-php artisan cache:clear
-echo "*******************************************************"
-echo ' '
-
-# Clear and cache routes
-echo "CLEARING AND CACHE ROUTES"
-php artisan route:cache
-echo "*******************************************************"
-echo ' '
-
-# Clear and cache config
-echo "CLEARING AND CACHE CONFIG"
-php artisan config:cache
-echo "*******************************************************"
-echo ' '
-
-echo "*******************************************************"
-echo "Updating DB with artisan"
-echo "*******************************************************"
-php artisan migrate --force
-echo ' '
-
-# Clear expired password reset tokens
-echo "CLEARING EXPIRED PASSWORD RESET TOKENS"
-php artisan auth:clear-resets
-echo "*******************************************************"
-echo ' '
-
-echo "*******************************************************"
-echo "Give righ access on storage"
-echo "*******************************************************"
-pwd
+step "Setting permissions on storage"
 chmod -R 0775 storage/
 
-echo "*******************************************************"
-echo "Setup environnement .htaccess"
-echo "*******************************************************"
-pwd
+step "Setting up .htaccess"
 if [ -f "public/.htaccess.${environnement}" ]; then
     cp "public/.htaccess.${environnement}" public/.htaccess
-    echo "Setting public/.htaccess.${environnement}"
+    echo "  Using public/.htaccess.${environnement}"
 fi
 
-echo "*******************************************************"
-echo "Creating sylinkks for shared folders"
-echo "*******************************************************"
-pwd
-for folder in "${shared[@]}"
-do
-   :
-   if [ ! -d "${deployPath}/shared/${folder}" ]; then
-       mkdir -p "${deployPath}/shared/${folder}"
-       chmod -R 0775 "${deployPath}/shared/${folder}/"
-       echo " -> Creating directory: ${deployPath}/shared/${folder}"
-   fi
-   ln -s "${deployPath}/shared/${folder}" ${folder}
+step "Creating symlinks for shared folders"
+for folder in "${shared[@]}"; do
+    if [ ! -d "${deployPath}/shared/${folder}" ]; then
+        mkdir -p "${deployPath}/shared/${folder}"
+        chmod -R 0775 "${deployPath}/shared/${folder}/"
+        echo "  -> Created: ${deployPath}/shared/${folder}"
+    fi
+    ln -s "${deployPath}/shared/${folder}" "${folder}"
 done
 
-echo "*******************************************************"
-echo "Removing old current symlink"
-cd $deployPath
-pwd
-echo "*******************************************************"
-rm current
+step "Switching current symlink to new release"
+cd "$deployPath"
+rm -f current
+ln -s "releases/${releaseDate}" current
+echo "  current -> releases/${releaseDate}"
 
-echo "*******************************************************"
-echo "Creating SymLink current"
-pwd
-echo "*******************************************************"
-ln -s releases/${releaseDate} current
-
-echo "*******************************************************"
-echo "Removing previous versions"
-pwd
-echo "*******************************************************"
+step "Removing old releases"
 cd releases/
-shopt -s dotglob
-shopt -s nullglob
+shopt -s dotglob nullglob
 array=(*/)
-for dir in "${array[@]}"; do echo "$dir"; done
+shopt -u dotglob nullglob
 
-# Unset shell option after use, if desired. Nullglob
-# is unset by default.
-shopt -u dotglob
-shopt -u nullglob
+echo "  Releases found: ${#array[@]} (keeping ${oldVersions})"
+while [ "${#array[@]}" -gt "${oldVersions}" ]; do
+    echo "  -> Removing ${array[0]}"
+    rm -rf "${array[0]}"
+    array=("${array[@]:1}")
+done
 
-#if more than 3 folders in releases we will remove olds one
-arraySize=${#array[@]}
-
-echo "Array size is ${arraySize} "
-if [ "${arraySize}" -gt ${oldVersions} ]; then
-        echo "removing old version ${array[0]}"
-        rm -rf ${array[0]}
-fi
-
-exit
+echo
+echo "==> Deploy complete: releases/${releaseDate}"

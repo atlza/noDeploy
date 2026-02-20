@@ -1,6 +1,9 @@
 #wich user should deploy the app ? Replace "username" by your username
 ME="username"
 
+# The name of your project, used for database names, etc.
+PROJECT="myProject"
+
 #Set a version number or leave commented so the programm will ask each time
 #versionTag='0.0.1'
 
@@ -23,3 +26,6 @@ shared[0]="storage"
 
 #Number of old versions to keep for rollback (1 = just the new one)
 oldVersions=1
+
+#Set to true if the project is a Laravel project (enables php artisan commands)
+isLaravel=true

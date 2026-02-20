@@ -1,3 +1,6 @@
+# This repository is archived.
+**For new versions of noDeploy, use this repository instead: https://codeberg.org/withmu/noDeploy**
+
 # noDeploy
 Deploy your PHP app with a bash script.
 
